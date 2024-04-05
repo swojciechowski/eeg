@@ -5,13 +5,15 @@ from digi_usb import DigiUSB
 CTRL_BYTE = b'\n'
 DELAY = 0.01
 
-class USBLed:
-    def __init__(self, initial_color=None, transision=None):
-        if initial_color is None:
-            self.color = (0, 0, 0)
-        else:
-            self.color = initial_color
+TRANSITION = 1
 
+def sign(x):
+    return (x > 0) - (x < 0)
+
+class USBLed:
+    def __init__(self, initial_color=None):
+        self.color = initial_color if initial_color else [0, 0 ,0]
+        self._current_color = self.color
         self._device = None
 
         self.__communiation_thread = Thread(target=self.__communication)
@@ -19,22 +21,24 @@ class USBLed:
 
     def __communication(self):
         while not self.__communication_stop.wait(DELAY):
+            if self._current_color == self.color:
+                continue
+
             self._device.write(ord(CTRL_BYTE))
             ctrl = self._device.read()
-            # print(f"Received: {type(ctrl)} {ctrl}")
 
             if ctrl != CTRL_BYTE:
                 continue
 
-            for _ in self.color:
+            if TRANSITION == 0:
+                self._current_color = self.color
+            elif TRANSITION == 1:
+                self._current_color = [cc + sign(c - cc) for c, cc in zip(self.color, self._current_color)]
+
+            for _ in self._current_color:
                 self._device.write(_)
-            # print(f"Written: {bytes(self.color)}")
 
         self._device = None
-
-    @staticmethod
-    def instant_transition(target_color):
-        return target_color
 
     def open(self):
         if self._device is not None:

@@ -14,9 +14,9 @@ def main():
         led.set_color(color)
         Canvas.config(bg="#{:02x}{:02x}{:02x}".format(*color))
 
-    redslider = tk.Scale(window, from_=0, to=255, command=sliderupdate)
-    greenslider = tk.Scale(window, from_=0, to=255, command=sliderupdate)
-    blueslider = tk.Scale(window, from_=0, to=255, command=sliderupdate)
+    redslider = tk.Scale(window, from_=255, to=0, command=sliderupdate)
+    greenslider = tk.Scale(window, from_=255, to=0, command=sliderupdate)
+    blueslider = tk.Scale(window, from_=255, to=0, command=sliderupdate)
     Canvas = tk.Canvas(window, width=200, height=200)
 
     redslider.grid(row=1, column=1)

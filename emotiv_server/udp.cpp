@@ -1,55 +1,39 @@
 #include "udp.h"
 
 #include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <unistd.h>
+#include <winsock2.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
+static WSADATA wsaData;
+static SOCKET SendingSocket;
+static SOCKADDR_IN ReceiverAddr;
+static int Port = 8888;
 
-static int active_socket = -1;
-
-struct sockaddr_in serv_addr;
-
-void udp_connect() {
-	struct hostent *server;
-    active_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    int portno = atoi(DEFAULT_PORT);
-
-    if (active_socket == -1) {
-    	std::cout << "Socket error" << std::endl;
-    	return;
+void udp_connect()
+{
+    if( WSAStartup(MAKEWORD(2,2), &wsaData) != 0){
+        WSACleanup();
+        return;
     }
 
-    server = gethostbyname(DEFAULT_SERVER_ADDR);
-
-    if (server == NULL) {
-    	std::cout << "Server error" << std::endl;
-    	return;
+    SendingSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (SendingSocket == INVALID_SOCKET){
+        WSACleanup();
+        return;
     }
 
-    // build an internet socket address structure, defining port.
-    memset(&serv_addr, 0, sizeof(serv_addr));
-    serv_addr.sin_family      = AF_INET;
-    serv_addr.sin_addr.s_addr = ((struct in_addr *)(server->h_addr))->s_addr;
-    serv_addr.sin_port        = htons(portno);
-
-    /* connect to PORT on HOST */
-	if (connect(active_socket,(struct sockaddr *)  &serv_addr, sizeof(serv_addr)) == -1) {
-		std::cout << "Connect error" << std::endl;
-		exit(1);
-	}
-
-    bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
-    serv_addr.sin_port = htons(portno);
+    /*Set up a SOCKADDR_IN structure that will identify who we will send datagrams to.*/
+    ReceiverAddr.sin_family = AF_INET;
+    ReceiverAddr.sin_port = htons(Port);
+    ReceiverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 }
 
-void send_message(char *sendbuf, unsigned int bufsize) {
-	sendto(active_socket, sendbuf, bufsize, 0 , (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+void send_message(char *sendbuf, unsigned int bufsize)
+{
+    sendto(SendingSocket, sendbuf, bufsize, 0, (SOCKADDR *)&ReceiverAddr, sizeof(ReceiverAddr));
 }
 
-void udp_disconnect() {
-	 close(active_socket);
+void udp_disconnect()
+{
+    closesocket(SendingSocket);
+    WSACleanup();
 }

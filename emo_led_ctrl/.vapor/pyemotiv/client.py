@@ -1,6 +1,6 @@
 import socket
 
-from .stoppable_threaad import StoppableThread
+from stoppable_threaad import StoppableThread
 
 
 class Client(StoppableThread):

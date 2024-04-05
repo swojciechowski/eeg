@@ -1,8 +1,8 @@
 import numpy
 import time
 
-from udp.client import Client
-from udp.server import Server
+from client import Client
+from server import Server
 
 DEFAULT_IP = "localhost"
 DEFAULT_PORT = 6666

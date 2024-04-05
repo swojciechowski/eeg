@@ -1,7 +1,7 @@
 #ifndef EDK_HELPERS_H_
 #define EDK_HELPERS_H_
 
-#include "IEegData.h"
+#include <IEegData.h>
 
 IEE_DataChannel_t *get_channel_list();
 

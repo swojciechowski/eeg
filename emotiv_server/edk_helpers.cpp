@@ -3,43 +3,47 @@
 #include <iostream>
 
 static IEE_DataChannel_t channel_array[] = {
-    IED_COUNTER,            //!< Sample counter
-    IED_AF3,                //!< Channel AF3
-    IED_AF4,                //!< Channel AF4
-    IED_F3,                 //!< Channel F3
-    IED_F4,                 //!< Channel F4
-    IED_FC5,                //!< Channel FC5
-    IED_FC6,                //!< Channel FC6
-    IED_F7,                 //!< Channel F7
-    IED_F8,                 //!< Channel F8
-    IED_O1,                 //!< Channel O1
-    IED_O2,                 //!< Channel O2
-    IED_P7,                 //!< Channel P7
-    IED_P8,                 //!< Channel P8
-    IED_T7,                 //!< Channel T7
-    IED_T8,                 //!< Channel T8
-    IED_GYROX,              //!< Gyroscope X-axis
-    IED_GYROY,              //!< Gyroscope Y-axis
-    IED_INTERPOLATED,       //!< Indicate if data is interpolated
-    IED_RAW_CQ,             //!< Raw contact quality value
-    IED_TIMESTAMP,          //!< System timestamp
-    IED_ES_TIMESTAMP,       //!< EmoState timestamp
-    IED_FUNC_ID,            //!< Reserved function id
-    IED_FUNC_VALUE,         //!< Reserved function value
-    IED_MARKER,             //!< Marker value from hardware
-    IED_SYNC_SIGNAL         //!< Synchronisation signal
+    IED_COUNTER,      //!< Sample counter
+    IED_AF3,          //!< Channel AF3
+    IED_AF4,          //!< Channel AF4
+    IED_F3,           //!< Channel F3
+    IED_F4,           //!< Channel F4
+    IED_FC5,          //!< Channel FC5
+    IED_FC6,          //!< Channel FC6
+    IED_F7,           //!< Channel F7
+    IED_F8,           //!< Channel F8
+    IED_O1,           //!< Channel O1
+    IED_O2,           //!< Channel O2
+    IED_P7,           //!< Channel P7
+    IED_P8,           //!< Channel P8
+    IED_T7,           //!< Channel T7
+    IED_T8,           //!< Channel T8
+    IED_GYROX,        //!< Gyroscope X-axis
+    IED_GYROY,        //!< Gyroscope Y-axis
+    IED_INTERPOLATED, //!< Indicate if data is interpolated
+    IED_RAW_CQ,       //!< Raw contact quality value
+    IED_TIMESTAMP,    //!< System timestamp
+    IED_ES_TIMESTAMP, //!< EmoState timestamp
+    IED_FUNC_ID,      //!< Reserved function id
+    IED_FUNC_VALUE,   //!< Reserved function value
+    IED_MARKER,       //!< Marker value from hardware
+    IED_SYNC_SIGNAL   //!< Synchronisation signal
 };
 
-IEE_DataChannel_t *get_channel_list() {
+IEE_DataChannel_t *get_channel_list()
+{
     return channel_array;
 }
 
-int get_channel_list_size() {
+int get_channel_list_size()
+{
     return sizeof(channel_array) / sizeof(IEE_DataChannel_t);
 }
 
-char const *get_error_info(int error) {
-    switch (error) {
+char const *get_error_info(int error)
+{
+    switch (error)
+    {
 
     case EDK_UNKNOWN_ERROR:
         return "An internal error occurred.";
@@ -115,8 +119,10 @@ char const *get_error_info(int error) {
     }
 }
 
-char const *get_event_type(IEE_Event_t event) {
-    switch (event) {
+char const *get_event_type(IEE_Event_t event)
+{
+    switch (event)
+    {
 
     case IEE_UnknownEvent:
         return "An unknown event.";
@@ -153,39 +159,69 @@ char const *get_event_type(IEE_Event_t event) {
     }
 }
 
-char const *get_channel_name(IEE_DataChannel_t channel) {
-    switch (channel) {
-    case IED_COUNTER: return "Sample counter";
-    case IED_INTERPOLATED: return "Indicate if data is interpolated";
-    case IED_RAW_CQ: return "Raw contact quality value";
-    case IED_AF3: return "Channel AF3";
-    case IED_F7: return "Channel F7";
-    case IED_F3: return "Channel F3";
-    case IED_FC5: return "Channel FC5";
-    case IED_T7: return "Channel T7";
-    case IED_P7: return "Channel P7";
-    case IED_O1: return "Channel O1";
-    case IED_O2: return "Channel O2";
-    case IED_P8: return "Channel P8";
-    case IED_T8: return "Channel T8";
-    case IED_FC6: return "Channel FC6";
-    case IED_F4: return "Channel F4";
-    case IED_F8: return "Channel F8";
-    case IED_AF4: return "Channel AF4";
-    case IED_GYROX: return "Gyroscope X-axis";
-    case IED_GYROY: return "Gyroscope Y-axis";
-    case IED_TIMESTAMP: return "System timestamp";
-    case IED_MARKER_HARDWARE: return "Marker from extender";
-    case IED_ES_TIMESTAMP: return "EmoState timestamp";
-    case IED_FUNC_ID: return "Reserved function id";
-    case IED_FUNC_VALUE: return "Reserved function value";
-    case IED_MARKER: return "Marker value from hardware";
-    case IED_SYNC_SIGNAL: return "Synchronisation signal";
-    default: return "Unknown";
+char const *get_channel_name(IEE_DataChannel_t channel)
+{
+    switch (channel)
+    {
+    case IED_COUNTER:
+        return "Sample counter";
+    case IED_INTERPOLATED:
+        return "Indicate if data is interpolated";
+    case IED_RAW_CQ:
+        return "Raw contact quality value";
+    case IED_AF3:
+        return "Channel AF3";
+    case IED_F7:
+        return "Channel F7";
+    case IED_F3:
+        return "Channel F3";
+    case IED_FC5:
+        return "Channel FC5";
+    case IED_T7:
+        return "Channel T7";
+    case IED_P7:
+        return "Channel P7";
+    case IED_O1:
+        return "Channel O1";
+    case IED_O2:
+        return "Channel O2";
+    case IED_P8:
+        return "Channel P8";
+    case IED_T8:
+        return "Channel T8";
+    case IED_FC6:
+        return "Channel FC6";
+    case IED_F4:
+        return "Channel F4";
+    case IED_F8:
+        return "Channel F8";
+    case IED_AF4:
+        return "Channel AF4";
+    case IED_GYROX:
+        return "Gyroscope X-axis";
+    case IED_GYROY:
+        return "Gyroscope Y-axis";
+    case IED_TIMESTAMP:
+        return "System timestamp";
+    case IED_MARKER_HARDWARE:
+        return "Marker from extender";
+    case IED_ES_TIMESTAMP:
+        return "EmoState timestamp";
+    case IED_FUNC_ID:
+        return "Reserved function id";
+    case IED_FUNC_VALUE:
+        return "Reserved function value";
+    case IED_MARKER:
+        return "Marker value from hardware";
+    case IED_SYNC_SIGNAL:
+        return "Synchronisation signal";
+    default:
+        return "Unknown";
     }
 }
 
-void print_headset_config(const unsigned int &user_id) {
+void print_headset_config(const unsigned int &user_id)
+{
     unsigned int EPOCmode;
     unsigned int eegRate;
     unsigned int eegRes;
@@ -197,5 +233,5 @@ void print_headset_config(const unsigned int &user_id) {
     std::cout << "Sampling rate: " << sample_rate << std::endl;
 
     IEE_GetHeadsetSettings(user_id, &EPOCmode, &eegRate, &eegRes, &memsRate, &memsRes);
-    std::cout << EPOCmode << ' ' << eegRate << ' ' << eegRes << ' ' << memsRate << ' ' << memsRes << ' ' << std::endl;
+    std::cout << "EPOCmode " << EPOCmode << "; " << "eegRate " << eegRate << "; " << "eegRes " << eegRes << "; " << "memsRate " << memsRate << "; " << "memsRes " << memsRes << std::endl;
 }
